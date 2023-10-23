@@ -1,0 +1,59 @@
+https://practice.geeksforgeeks.org/problems/permutations-of-a-given-string2041/1?utm_source=gfg&utm_medium=article&utm_campaign=bottom_sticky_on_article
+
+//{ Driver Code Starts
+#include<bits/stdc++.h>
+using namespace std;
+
+// } Driver Code Ends
+class Solution
+{
+	public:
+	    void sol(string S, int index, vector<string>&res){
+	        if(index==S.length()){
+	             res.push_back(S);
+	             return;
+	        }
+	        unordered_set<char> st;
+	        for(int i=index; i<S.length(); i++){
+	            if(st.find(S[i])!=st.end()){  //ABB, S[index]=A, S[i] = B, we have alredy found all the permutations if we swap A<->B(first), so no need to swap last B with  A
+	                continue;
+	            }
+	            st.insert(S[i]);
+	            swap(S[i],S[index]);
+	            sol(S,index+1,res);
+	            swap(S[i],S[index]);
+	        }
+	        return;
+	    }
+		vector<string>find_permutation(string S)
+		{
+		    vector<string> res;
+		    sol(S,0,res);
+		    return res;
+		}
+};
+
+
+
+
+//{ Driver Code Starts.
+int main(){
+    int t;
+    cin >> t;
+    while(t--)
+    {
+	    string S;
+	    cin >> S;
+	    Solution ob;
+	    vector<string> ans = ob.find_permutation(S);
+	    sort(ans.begin(),ans.end());
+	    for(auto i: ans)
+	    {
+	    	cout<<i<<" ";
+	    }
+	    cout<<"\n";
+    }
+	return 0;
+}
+
+// } Driver Code Ends
