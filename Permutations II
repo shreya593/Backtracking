@@ -1,0 +1,29 @@
+https://leetcode.com/problems/permutations-ii/description/
+
+class Solution {
+public:
+    vector<vector<int>> sol(vector<int> nums,int n,int index, vector<vector<int>> &ans){
+        if(index>=n){
+          ans.push_back(nums);
+          return ans;
+        }
+        unordered_set<int> st;
+       for(int i=index; i<nums.size(); i++){    
+            if(st.find(nums[i])!=st.end()){
+                continue;
+            } 
+              st.insert(nums[i]);
+              swap(nums[index],nums[i]);
+              sol(nums,n,index+1,ans);
+              swap(nums[index],nums[i]);
+            
+       }
+       return ans;
+    }
+    vector<vector<int>> permuteUnique(vector<int>& nums) {
+       
+        vector<vector<int>> ans;
+        int n = nums.size();
+        return sol(nums,n,0,ans);
+    }
+};
